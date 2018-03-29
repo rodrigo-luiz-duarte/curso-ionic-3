@@ -19,11 +19,14 @@ import 'rxjs/add/observable/of';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { AgendamentoDaoProvider } from '../providers/agendamento-dao/agendamento-dao';
+import { LoginPage } from '../pages/login/login';
+import { UsuarioServiceProvider } from '../providers/usuario-service/usuario-service';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { AgendamentoDaoProvider } from '../providers/agendamento-dao/agendamento
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    LoginPage
   ],
   providers: [
     StatusBar,
@@ -46,7 +50,8 @@ import { AgendamentoDaoProvider } from '../providers/agendamento-dao/agendamento
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CarrosServiceProvider,
     AgendamentoServiceProvider,
-    AgendamentoDaoProvider
+    AgendamentoDaoProvider,
+    UsuarioServiceProvider
   ]
 })
 export class AppModule {}
