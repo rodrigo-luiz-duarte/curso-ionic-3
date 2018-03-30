@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Alert } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Alert, Platform } from 'ionic-angular';
 import { Carro } from '../../modelos/carro';
 import { AgendamentoServiceProvider } from '../../providers/agendamento-service/agendamento-service';
 import { Agendamento } from '../../modelos/agendamento';
 import { HomePage } from '../home/home';
 import { AgendamentoDaoProvider } from '../../providers/agendamento-dao/agendamento-dao';
+import { Vibration } from '@ionic-native/vibration';
+import { DatePicker } from '@ionic-native/date-picker';
 @IonicPage()
 @Component({
   selector: 'page-cadastro',
@@ -26,7 +28,10 @@ export class CadastroPage {
       public navParams: NavParams,
       private _alertCtrl: AlertController,
       private _agendamentoService: AgendamentoServiceProvider,
-      private _agendamentoDao: AgendamentoDaoProvider
+      private _agendamentoDao: AgendamentoDaoProvider,
+      private _vibration: Vibration,
+      private _datePicker: DatePicker,
+      private _plataform: Platform
   ) {
 
       this._carro = this.navParams.get('carroSelecionado');
@@ -60,6 +65,8 @@ export class CadastroPage {
   private _valideCampos(): boolean {
 
     if (!this.nome || !this.endereco || !this.email) {
+
+      this._vibration.vibrate(500);
 
       this._alertCtrl.create({
         title: 'Preenchimento obrigatório',
@@ -131,4 +138,35 @@ export class CadastroPage {
           }
         );
   }
+
+  selecioneData() {
+
+    if (this.ehUmDispositivo()) {
+      
+      this._datePicker.show(
+        {
+          date: new Date(),
+          mode: 'date',
+          locale: 'pt-BR',
+          cancelButtonLabel: 'Cancelar'
+        }
+      )
+      .then( data => {
+  
+        if (data) {
+          this.data = data.toISOString()
+        }
+      });
+    }
+  }
+
+  ehUmDispositivo() : boolean {
+
+    let result: boolean = false;
+    let plataformas: Array<string> = this._plataform.platforms();
+    result = plataformas.indexOf('mobileweb') === -1;
+
+    return result;
+  }
+
 }

@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Agendamento } from '../../modelos/agendamento';
 import { Observable } from 'rxjs/Observable';
+import { ApiUrlProvider } from '../api-url/api-url';
 
+const AGENDAMENTO_ENDPOINT: string = '/agendamento/agenda';
 @Injectable()
 export class AgendamentoServiceProvider {
 
-  private _urlBase: string = 'http://localhost:8080/api';
-  private _agendamentoEndpoit: string = '/agendamento/agenda';
-
   constructor(
+    private _apiUrl: ApiUrlProvider,
     private _http: HttpClient
   ) {}
 
   agende(agendamento: Agendamento) { 
 
-    let url:string = this._urlBase + this._agendamentoEndpoit;
+    let url: string = this._apiUrl.urlBase + AGENDAMENTO_ENDPOINT;
+    
     return this._http
                 .post(url, agendamento)
                 .do(() => agendamento.enviado = true)

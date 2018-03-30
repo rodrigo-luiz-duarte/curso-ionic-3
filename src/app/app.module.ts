@@ -21,6 +21,10 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AgendamentoDaoProvider } from '../providers/agendamento-dao/agendamento-dao';
 import { LoginPage } from '../pages/login/login';
 import { UsuarioServiceProvider } from '../providers/usuario-service/usuario-service';
+import { ApiUrlProvider } from '../providers/api-url/api-url';
+import { Vibration } from '@ionic-native/vibration';
+import { DatePicker } from '@ionic-native/date-picker';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,11 @@ import { UsuarioServiceProvider } from '../providers/usuario-service/usuario-ser
     CarrosServiceProvider,
     AgendamentoServiceProvider,
     AgendamentoDaoProvider,
-    UsuarioServiceProvider
+    UsuarioServiceProvider,
+    ApiUrlProvider,
+    Vibration,
+    DatePicker,
+    Camera
   ]
 })
 export class AppModule {}
